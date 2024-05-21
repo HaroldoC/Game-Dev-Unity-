@@ -49,15 +49,48 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CalculateMovement();
+    }
+
+    void CalculateMovement()
+    {
         float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
         
         //Goes straight to the right. I can also use the code below to specify an specific vector setting
-        transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);
+        // transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);
+        // transform.Translate(Vector3.up * verticalInput * speed * Time.deltaTime);
+        
         //transform.Translate(new Vector3(5, 0, 0) * 5 * real time);
 
-        
 
+        //One line code for a cleaner and better understanding 
+        transform.Translate(speed * Time.deltaTime * new Vector3(horizontalInput, verticalInput, 0));
 
+        //If player position on the y is greater than 0
+        //y position = 0
 
+        // float a = 5;
+        // float b = 10;
+
+        if (transform.position.y >= 0)
+        {
+            transform.position = new Vector3(transform.position.x, 0, 0);
+        }
+        else if (transform.position.y <= -3.8f)
+        {
+            transform.position = new Vector3(transform.position.x, -3.8f, 0);
+        }
+
+        // if player on the x > 11
+        // x position = -11
+        if (transform.position.x > 11f)
+        {
+            transform.position = new Vector3(-11f, transform.position.y, 0);
+        }        
+        else if (transform.position.x < -11f)
+        {
+            transform.position = new Vector3(11f, transform.position.y, 0);
+        }
     }
 }

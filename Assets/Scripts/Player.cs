@@ -52,6 +52,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
+<<<<<<< HEAD
 
         // if I hit sapce bar, will spawn gameObject
         // CalculateFire();
@@ -61,6 +62,8 @@ public class Player : MonoBehaviour
             // Debug.Log("Sapce Key Pressed");
             Instantiate(_laserPrefab, transform.position, Quaternion.identity);
         }
+=======
+>>>>>>> dae734debba66823f9f189e9bb1f3d3da3f9d0f5
     }
 
     void CalculateMovement()
@@ -77,6 +80,7 @@ public class Player : MonoBehaviour
 
         //One line code for a cleaner and better understanding 
         transform.Translate(speed * Time.deltaTime * new Vector3(horizontalInput, verticalInput, 0));
+<<<<<<< HEAD
 
         //If player position on the y is greater than 0
         //y position = 0
@@ -95,8 +99,27 @@ public class Player : MonoBehaviour
 
         //Clamping method
         // transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
+=======
+>>>>>>> dae734debba66823f9f189e9bb1f3d3da3f9d0f5
 
+        //If player position on the y is greater than 0
+        //y position = 0
 
+<<<<<<< HEAD
+=======
+        // float a = 5;
+        // float b = 10;
+
+        if (transform.position.y >= 0)
+        {
+            transform.position = new Vector3(transform.position.x, 0, 0);
+        }
+        else if (transform.position.y <= -3.8f)
+        {
+            transform.position = new Vector3(transform.position.x, -3.8f, 0);
+        }
+
+>>>>>>> dae734debba66823f9f189e9bb1f3d3da3f9d0f5
         // if player on the x > 11
         // x position = -11
         if (transform.position.x > 11f)

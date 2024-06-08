@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
-{   
+{
     // Variables 
     //public or private, type, name, value
     // public float speed = 3.5f; 
@@ -34,8 +34,15 @@ public class Player : MonoBehaviour
     // public float speed = 3.5f;
     [SerializeField]
     private float speed = 3.5f;
+    [SerializeField]
+    private GameObject _laserPrefab;
+    [SerializeField]
+    private float _fireRate = 0.5f;    
+    private float _canFire = -1f;
+    [SerializeField]
+    private int _lives = 3;
 
-    
+
 
     // Start is called before the first frame update
     void Start()
@@ -43,24 +50,25 @@ public class Player : MonoBehaviour
         //take the current position = new position (0, 0, 0)
         //transform.position.y - to find the actuall position, use vector 3
         transform.position = new Vector3(0, 0, 0);
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
         CalculateMovement();
+        FireLaser();
     }
 
     void CalculateMovement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        
+
         //Goes straight to the right. I can also use the code below to specify an specific vector setting
         // transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);
         // transform.Translate(Vector3.up * verticalInput * speed * Time.deltaTime);
-        
+
         //transform.Translate(new Vector3(5, 0, 0) * 5 * real time);
 
 
@@ -82,15 +90,41 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(transform.position.x, -3.8f, 0);
         }
 
+        //Clamping method
+        // transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
+
         // if player on the x > 11
         // x position = -11
         if (transform.position.x > 11f)
         {
             transform.position = new Vector3(-11f, transform.position.y, 0);
-        }        
+        }
         else if (transform.position.x < -11f)
         {
             transform.position = new Vector3(11f, transform.position.y, 0);
+        }
+    }
+
+    void FireLaser()
+    {
+        // if I hit sapce bar, will spawn gameObject
+        // CalculateFire();
+
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        {
+            _canFire = Time.time + _fireRate;
+            // Debug.Log("Sapce Key Pressed");
+            Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
+        }
+    }
+
+    public void Damage()
+    {
+        _lives--;
+        
+        if (_lives < 1)
+        {
+            Destroy(this.gameObject);
         }
     }
 }

@@ -14,7 +14,6 @@ public class Laser : MonoBehaviour
         
     }
 
-<<<<<<< HEAD
   // Update is called once per frame
   void Update()
   {
@@ -26,12 +25,5 @@ public class Laser : MonoBehaviour
     {
       Destroy(this.gameObject);
     }
-
-=======
-    // Update is called once per frame
-    void Update()
-    {
-      transform.Translate(Vector3.up * _speed * Time.deltaTime);  
->>>>>>> 1c77c0214e6a7b5a8f574e9c6320d1c204dd94a6
-    }   
+  }         
 }

@@ -36,16 +36,11 @@ public class Player : MonoBehaviour
     private float speed = 3.5f;
     [SerializeField]
     private GameObject _laserPrefab;
-<<<<<<< HEAD
     [SerializeField]
     private float _fireRate = 0.5f;    
     private float _canFire = -1f;
     [SerializeField]
     private int _lives = 3;
-
-=======
->>>>>>> 1c77c0214e6a7b5a8f574e9c6320d1c204dd94a6
-
 
     // Start is called before the first frame update
     void Start()
@@ -60,10 +55,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         CalculateMovement();
-<<<<<<< HEAD
         FireLaser();
-=======
-<<<<<<< HEAD
 
         // if I hit sapce bar, will spawn gameObject
         // CalculateFire();
@@ -73,9 +65,6 @@ public class Player : MonoBehaviour
             // Debug.Log("Sapce Key Pressed");
             Instantiate(_laserPrefab, transform.position, Quaternion.identity);
         }
-=======
->>>>>>> dae734debba66823f9f189e9bb1f3d3da3f9d0f5
->>>>>>> 1c77c0214e6a7b5a8f574e9c6320d1c204dd94a6
     }
 
     void CalculateMovement()
@@ -92,7 +81,6 @@ public class Player : MonoBehaviour
 
         //One line code for a cleaner and better understanding 
         transform.Translate(speed * Time.deltaTime * new Vector3(horizontalInput, verticalInput, 0));
-<<<<<<< HEAD
 
         //If player position on the y is greater than 0
         //y position = 0
@@ -111,31 +99,9 @@ public class Player : MonoBehaviour
 
         //Clamping method
         // transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.8f, 0), 0);
-<<<<<<< HEAD
-
-=======
-=======
->>>>>>> dae734debba66823f9f189e9bb1f3d3da3f9d0f5
-
         //If player position on the y is greater than 0
         //y position = 0
 
-<<<<<<< HEAD
-=======
-        // float a = 5;
-        // float b = 10;
-
-        if (transform.position.y >= 0)
-        {
-            transform.position = new Vector3(transform.position.x, 0, 0);
-        }
-        else if (transform.position.y <= -3.8f)
-        {
-            transform.position = new Vector3(transform.position.x, -3.8f, 0);
-        }
-
->>>>>>> dae734debba66823f9f189e9bb1f3d3da3f9d0f5
->>>>>>> 1c77c0214e6a7b5a8f574e9c6320d1c204dd94a6
         // if player on the x > 11
         // x position = -11
         if (transform.position.x > 11f)
@@ -147,7 +113,7 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(11f, transform.position.y, 0);
         }
     }
-
+    
     void FireLaser()
     {
         // if I hit sapce bar, will spawn gameObject

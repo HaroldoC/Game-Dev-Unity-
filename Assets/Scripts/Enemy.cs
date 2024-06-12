@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour
         // Destroy(this.gameObject);
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         // if other is the player
         // damage the player

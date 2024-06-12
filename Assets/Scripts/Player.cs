@@ -37,12 +37,16 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
+    private GameObject _tripleShotPrefab;
+    [SerializeField]
     private float _fireRate = 0.5f;    
     private float _canFire = -1f;
     [SerializeField]
-    private int _lives = 3;
-    [SerializeField]
+    private int _lives = 3;    
     private Spawn_Manager _spawnManager;
+    [SerializeField]
+    private bool isTripleShotActive = false;
+    // variable for isTripleShotActive
 
     // Start is called before the first frame update
     void Start()
@@ -126,12 +130,23 @@ public class Player : MonoBehaviour
         // if I hit sapce bar, will spawn gameObject
         // CalculateFire();
 
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        if (isTripleShotActive == true)
         {
-            _canFire = Time.time + _fireRate;
-            // Debug.Log("Sapce Key Pressed");
-            Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
+            if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+            {
+                _canFire = Time.time + _fireRate;
+                Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+            }
         }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+            {
+                _canFire = Time.time + _fireRate;
+                // Debug.Log("Sapce Key Pressed");
+                Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.9f, 0), Quaternion.identity);
+            }
+        }        
     }
 
     public void Damage()

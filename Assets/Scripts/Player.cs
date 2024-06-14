@@ -3,37 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
-{
-    // Variables 
-    //public or private, type, name, value
-    // public float speed = 3.5f; 
-    // public float jumpForce = 5.0f; 
-    // public bool isGrounded = false; // public bool isGrounded = false;
-    // public bool doubleJump = false; // public bool doubleJump = false;
-    // public Transform groundCheck; // public Transform groundCheck;
-    // public LayerMask groundLayer; // public LayerMask groundLayer;
-    // public Rigidbody2D rb; // public Rigidbody2D rb;
-    // public Animator anim; // public Animator anim;
-    // public Collider2D coll; // public Collider2D coll;
-    // public int cherries = 0; // public int cherries = 0;
-    // public Text cherryText; // public Text cherryText;
-    // public Text livesText; // public Text livesText;
-    // public int lives = 3; // public int lives = 3;
-    // public AudioSource cherry; // public AudioSource cherry;
-    // public AudioSource footstep; // public AudioSource footstep;
-    // public AudioSource jump; // public AudioSource jump;
-    // public AudioSource hit; // public AudioSource hit;
-    // public AudioSource gameover; // public AudioSource gameover;
-    // public AudioSource win; // public AudioSource win;
-    // public AudioSource bgm; // public AudioSource bgm;
-
-    // data type - int, float, bool, string
-    // every variable has a name
-    // optional value assigned
-
-    // public float speed = 3.5f;
+{    
     [SerializeField]
-    private float speed = 3.5f;
+    private float _speed = 3.5f;
+    private float _speedMultiplier = 2;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
@@ -46,8 +19,9 @@ public class Player : MonoBehaviour
     private Spawn_Manager _spawnManager;
     [SerializeField]
     private bool isTripleShotActive = false;
-    // variable for isTripleShotActive
-
+    [SerializeField]
+    // private bool isShieldActive = false;
+    private bool isSpeedBoostActive = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -90,14 +64,19 @@ public class Player : MonoBehaviour
         //transform.Translate(new Vector3(5, 0, 0) * 5 * real time);
 
 
-        //One line code for a cleaner and better understanding 
-        transform.Translate(speed * Time.deltaTime * new Vector3(horizontalInput, verticalInput, 0));
+        //One line code for a cleaner and better understanding
+        float currentSpeed = isSpeedBoostActive ? _speed * _speedMultiplier : _speed;
+        transform.Translate(currentSpeed * Time.deltaTime * new Vector3(horizontalInput, verticalInput, 0)); 
+        // transform.Translate(_speed * Time.deltaTime * new Vector3(horizontalInput, verticalInput, 0));
 
-        //If player position on the y is greater than 0
-        //y position = 0
-
-        // float a = 5;
-        // float b = 10;
+        // if (isSpeedBoostActive == false)
+        // {
+        //     _speed = 3.5f;
+        // }
+        // else
+        // {
+        //     _speed = 7.0f;
+        // }
 
         if (transform.position.y >= 0)
         {
@@ -159,4 +138,43 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    public void TripleShotActive()
+    {
+        isTripleShotActive = true;
+        StartCoroutine(TripleShotPowerDownRoutine());
+    }
+    
+    IEnumerator TripleShotPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        isTripleShotActive = false;
+    }
+
+    public void SpeedBoostActive()
+    {
+        isSpeedBoostActive = true;
+        _speed *= _speedMultiplier;
+        StartCoroutine(SpeedBoostPowerDownRoutine());
+    }
+
+    IEnumerator SpeedBoostPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);        
+        isSpeedBoostActive = false;
+        _speed /= _speedMultiplier;
+
+    }
+
+    // public void ShieldBoostActive()
+    // {
+    //     isShieldBoostActive = true;
+    //     StartCoroutine(ShieldBoostPowerDownRoutine());
+    // }
+
+    // IEnumerator ShieldBoostPowerDownRoutine()
+    // {
+    //     yield return new WaitForSeconds(5.0f);
+    //     isShieldBoostActive = false;
+    // }
 }

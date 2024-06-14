@@ -23,6 +23,10 @@ public class Laser : MonoBehaviour
     // if laser position is grader than 8 on the y, we need to destroy the object
     if (transform.position.y > 8f)
     {
+      if (transform.parent != null)
+      {
+        Destroy(transform.parent.gameObject);
+      }
       Destroy(this.gameObject);
     }
   }         

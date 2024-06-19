@@ -15,7 +15,7 @@ public class Spawn_Manager : MonoBehaviour
     void Start()
     {
         StartCoroutine(SpawnEnemy());
-        StartCoroutine(SpawnPowerupRoutine());
+        StartCoroutine(SpawnPowerupRoutine());       
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class Spawn_Manager : MonoBehaviour
     }
 
 
-    // spawn game objects evry 5 secs
+    // spawn game objects every 5 secs
     // create a coroutine of type IEnumerator - Yield Events
     // while loop
     // instantiate enemy prefab
@@ -44,7 +44,7 @@ public class Spawn_Manager : MonoBehaviour
     {
         while (_stopSpawning == false)
         {            
-            int randomPowerUp = Random.Range(0, 2);
+            int randomPowerUp = Random.Range(0, 3);
             GameObject newPowerup = Instantiate(powerups[randomPowerUp], new Vector3(Random.Range(-8f, 8f), 7, 0), Quaternion.identity);           
             Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);            
             yield return new WaitForSeconds(Random.Range(3, 8));

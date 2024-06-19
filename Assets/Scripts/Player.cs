@@ -22,6 +22,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     // private bool isShieldActive = false;
     private bool isSpeedBoostActive = false;
+    private bool isShieldBoostActive = false;
+    [SerializeField]
+    private GameObject shieldVisualizer;
+    [SerializeField]
+    private int _score;
+    private UIManager _uiManager;
+    // private GameManager _gameManager;
+    // private AudioSource _audioSource;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,10 +37,15 @@ public class Player : MonoBehaviour
         //transform.position.y - to find the actuall position, use vector 3
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<Spawn_Manager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
 
         if (_spawnManager == null)
         {
             Debug.LogError("The Spawn Manager is NULL.");
+        }
+        if (_uiManager == null)
+        {
+            Debug.LogError("The UI Manager is NULL.");
         }
     }
 
@@ -130,7 +143,17 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
+        if (isShieldBoostActive == true)        
+        {
+            // Debug.Log("Shield is active");            
+            isShieldBoostActive = false;
+            shieldVisualizer.SetActive(false);
+            return;
+        }
+        
         _lives--;
+        // _livesText.text = "Lives: " + _lives;
+        _uiManager.UpdateLives(_lives);
         
         if (_lives < 1)
         {
@@ -166,15 +189,22 @@ public class Player : MonoBehaviour
 
     }
 
-    // public void ShieldBoostActive()
-    // {
-    //     isShieldBoostActive = true;
-    //     StartCoroutine(ShieldBoostPowerDownRoutine());
-    // }
+    public void ShieldBoostActive()
+    {
+        isShieldBoostActive = true;
+        shieldVisualizer.SetActive(true);
+        // StartCoroutine(ShieldBoostPowerDownRoutine());
+    }
 
-    // IEnumerator ShieldBoostPowerDownRoutine()
-    // {
-    //     yield return new WaitForSeconds(5.0f);
-    //     isShieldBoostActive = false;
-    // }
+    IEnumerator ShieldBoostPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        isShieldBoostActive = false;
+    }
+
+    public void AddScore(int points)
+    {
+        _score += points;
+        _uiManager.UpdateScore(_score);
+    }
 }

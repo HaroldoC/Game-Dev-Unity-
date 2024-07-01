@@ -8,11 +8,25 @@ public class Enemy : MonoBehaviour
     private float _speed = 4.0f;
     [SerializeField]
     private Player _player;
+    private Animator _anim;
+
 
     // Start is called before the first frame update
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
+
+        if (_player == null)
+        {
+            Debug.Log("The Player is NULL");
+        }
+
+        _anim = GetComponent<Animator>();
+
+        if (_anim == null)
+        {
+            Debug.Log("The Animator is NULL");
+        }
     }
 
     // Update is called once per frame
@@ -24,15 +38,15 @@ public class Enemy : MonoBehaviour
         // if bottom of the screen, respawn back up top with a new random x position
         if (transform.position.y < -5f)
         {
-            transform.position = new Vector3(Random.Range(-8f, 8f), 7, 0);
-
+            float randomX = Random.Range(-8f, 8f);
+            transform.position = new Vector3(randomX, 7, 0);
         }
 
         // if the enemy position on the y is less than -8, destroy the object
         // Destroy(this.gameObject);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         // if other is the player
         // damage the player
@@ -41,12 +55,13 @@ public class Enemy : MonoBehaviour
         {
             Player player = other.transform.GetComponent<Player>();
 
-            if (player != null)
+            if (_player != null)
             {
                 player.Damage();
             }
-
-            Destroy(this.gameObject);
+            _anim.SetTrigger("OnEnemyDeath");
+            _speed = 0;
+            Destroy(this.gameObject, 2.4f);
         }
 
         // if other is Laser
@@ -55,12 +70,14 @@ public class Enemy : MonoBehaviour
         if (other.tag == "Laser")
         {
             Destroy(other.gameObject);
-            int points = 10; // Define and assign a value to the 'points' variable
+            // int points = 10; 
             if (_player != null)
             {
-                _player.AddScore(points);
+                _player.AddScore(10);
             }
-            Destroy(this.gameObject);
+            _anim.SetTrigger("OnEnemyDeath");
+            _speed = 0;
+            Destroy(this.gameObject, 2.4f);
         }
     }
 }

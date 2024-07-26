@@ -10,28 +10,18 @@ public class Spawn_Manager : MonoBehaviour
     private GameObject _enemyContainer;
     [SerializeField]
     private GameObject[] powerups;    
-    private bool _stopSpawning = false;
-    // Start is called before the first frame update
-    void Start()
+    private bool _stopSpawning = false;     
+    
+    public void StartSpawning()
     {
         StartCoroutine(SpawnEnemy());
         StartCoroutine(SpawnPowerupRoutine());       
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
-    // spawn game objects every 5 secs
-    // create a coroutine of type IEnumerator - Yield Events
-    // while loop
-    // instantiate enemy prefab
-    // yield wait for 5 secs
+    }    
+    
     IEnumerator SpawnEnemy()
     {
+        yield return new WaitForSeconds(3.0f);
+        
         while (_stopSpawning == false)
         {
             GameObject newEnemy =  Instantiate(_enemyPrefab, new Vector3(Random.Range(-8f, 8f), 7, 0), Quaternion.identity);
@@ -42,6 +32,8 @@ public class Spawn_Manager : MonoBehaviour
 
     IEnumerator SpawnPowerupRoutine()
     {
+        yield return new WaitForSeconds(3.0f);
+
         while (_stopSpawning == false)
         {            
             int randomPowerUp = Random.Range(0, 3);

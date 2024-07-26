@@ -5,22 +5,15 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
-    private float _speed = 3.0f;
-    // ID for powerups
-    // 0 = Triple Shot
-    // 1 = Speed
-    // 2 = Shields
+    private float _speed = 3.0f;    
     [SerializeField]
     private int powerupID;
-    // private bool isCollected = false;
-    // private PlayerController playerController;
-    // private AudioSource _audioSource;
-    // [SerializeField]
-    // private AudioClip _clip;
-    // Start is called before the first frame update
+    [SerializeField]
+    private AudioClip _clip;
+
     void Start()
     {
-        
+       
     }
 
     // Update is called once per frame
@@ -38,6 +31,9 @@ public class Powerup : MonoBehaviour
         if (other.tag == "Player")
         {
             Player player = other.transform.GetComponent<Player>();
+
+            AudioSource.PlayClipAtPoint(_clip, transform.position);            
+
             if (player != null)
             {
                 switch (powerupID)

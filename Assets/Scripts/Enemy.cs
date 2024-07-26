@@ -9,12 +9,13 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private Player _player;
     private Animator _anim;
+    private AudioSource _audioSource;
 
-
-    // Start is called before the first frame update
+    
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
+        _audioSource = GetComponent<AudioSource>();
 
         if (_player == null)
         {
@@ -28,29 +29,20 @@ public class Enemy : MonoBehaviour
             Debug.Log("The Animator is NULL");
         }
     }
-
-    // Update is called once per frame
+    
     void Update()
-    {
-        // move the enemy down 4 m per s
+    {        
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
-
-        // if bottom of the screen, respawn back up top with a new random x position
+        
         if (transform.position.y < -5f)
         {
             float randomX = Random.Range(-8f, 8f);
             transform.position = new Vector3(randomX, 7, 0);
-        }
-
-        // if the enemy position on the y is less than -8, destroy the object
-        // Destroy(this.gameObject);
+        }        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
-    {
-        // if other is the player
-        // damage the player
-        // destroy us
+    {        
         if (other.tag == "Player")
         {
             Player player = other.transform.GetComponent<Player>();
@@ -61,12 +53,10 @@ public class Enemy : MonoBehaviour
             }
             _anim.SetTrigger("OnEnemyDeath");
             _speed = 0;
-            Destroy(this.gameObject, 2.4f);
+            _audioSource.Play();
+            Destroy(this.gameObject, 2.8f);            
         }
-
-        // if other is Laser
-        // destroy the laser
-        // destroy us
+        
         if (other.tag == "Laser")
         {
             Destroy(other.gameObject);
@@ -77,7 +67,8 @@ public class Enemy : MonoBehaviour
             }
             _anim.SetTrigger("OnEnemyDeath");
             _speed = 0;
-            Destroy(this.gameObject, 2.4f);
+            _audioSource.Play();
+            Destroy(this.gameObject, 2.8f);            
         }
     }
 }

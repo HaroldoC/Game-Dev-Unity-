@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// using UnityStandardAssets.CrossPlatformInput;
 
 public class Player : MonoBehaviour
 {    
@@ -76,8 +77,8 @@ public class Player : MonoBehaviour
 
     void CalculateMovement()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = Input.GetAxis("Horizontal"); //CrossPlatformInputManager.GetAxis("Horizontal")
+        float verticalInput = Input.GetAxis("Vertical"); //CrossPlatformInputManager.GetAxis("Vertical"); 
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
 
